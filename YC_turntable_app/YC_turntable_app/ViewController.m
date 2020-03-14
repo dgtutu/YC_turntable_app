@@ -13,29 +13,74 @@
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 
 //旋转速度模式的旋转
-@property (weak, nonatomic) IBOutlet UIButton *speedModeButton1;
-@property (weak, nonatomic) IBOutlet UIButton *speedModeButton2;
+@property (weak, nonatomic) IBOutlet UIButton *fixedSpeedButton;
+@property (weak, nonatomic) IBOutlet UIButton *segmentSpeedButton;
+@property (weak, nonatomic) IBOutlet UIButton *clockwiseButton;
+@property (weak, nonatomic) IBOutlet UIButton *counterClockwiseButton;
+
+
 @end
-
-
 @implementation ViewController
-#pragma mark radio单选按钮和状态的设置
+#pragma mark 下拉标签的实现
 /**
- 单选按钮和状态的设置,懒加载
- */
+旋转方向的默认设置,懒加载
+*/
 
--(UIButton*)speedModeButton1{
+
+
+#pragma mark 旋转方向的设置
+/**
+旋转方向的默认设置,懒加载
+*/
+-(UIButton *)clockwiseButton{
      NSLog(@"速度模式按钮加载中");
-    //UIButton *_speedModeButton1=[UIButton buttonWithType:UIButtonTypeCustom];
-    [_speedModeButton1 setTitle:@"傻逼" forState:UIControlStateNormal];
-    [_speedModeButton1 setTitle:@"智障" forState:UIControlStateHighlighted];
-    //test git
-    return _speedModeButton1;
+    _clockwiseButton.selected=YES;
+    return _clockwiseButton;
 }
 
--(UIButton*)speedModeButton2{
-    return _speedModeButton2;
+/**
+单选实现
+*/
+- (IBAction)rotationMode:(UIButton *)button {
+    if(button.tag==3){
+        button.selected=YES;
+        UIButton *but=(UIButton*)[self.view viewWithTag:4];
+        but.selected=NO;
+    }else if (button.tag==4){
+        button.selected=YES;
+        UIButton *but=(UIButton*)[self.view viewWithTag:3];
+        but.selected=NO;
+    }
 }
+
+
+
+
+#pragma mark 旋转速度模式的设置
+/**
+ 单选按钮和状态的默认设置,懒加载
+ */
+-(UIButton *)fixedSpeedButton{
+     NSLog(@"速度模式按钮加载中");
+    _fixedSpeedButton.selected=YES;
+    return _fixedSpeedButton;
+}
+
+/**
+单选实现
+*/
+- (IBAction)speedMode:(UIButton *)button {
+    if(button.tag==1){
+        button.selected=YES;
+        UIButton *but=(UIButton*)[self.view viewWithTag:2];
+        but.selected=NO;
+    }else if (button.tag==2){
+        button.selected=YES;
+        UIButton *but=(UIButton*)[self.view viewWithTag:1];
+        but.selected=NO;
+    }
+}
+
 
 
 
@@ -77,7 +122,8 @@
     // Do any additional setup after loading the view.
     NSLog(@"0000");
     [self.view addSubview:self.modeSwitch];
-    [self.view addSubview:self.speedModeButton1];
+    [self.view addSubview:self.fixedSpeedButton];
+    [self.view addSubview:self.clockwiseButton];
 //  [self.modeSwitchaddTarget:self action:@selector(modeSwitchChange:) forControlEvents:UIControlEventValueChanged];
 }
 

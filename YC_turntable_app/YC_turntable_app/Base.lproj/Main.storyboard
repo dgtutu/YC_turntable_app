@@ -95,20 +95,26 @@
                                 <rect key="frame" x="92" y="467" width="266" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLb-W9-BwA">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLb-W9-BwA">
                                 <rect key="frame" x="39" y="296" width="19" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
-                                <state key="normal" image="selected.png"/>
+                                <state key="normal" image="not_selected.png"/>
                                 <state key="disabled" image="not_selected.png"/>
                                 <state key="selected" image="selected.png"/>
                                 <state key="highlighted" image="not_selected.png"/>
+                                <connections>
+                                    <action selector="speedMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tDR-ni-E0f"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9F-Mn-9Li">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C9F-Mn-9Li">
                                 <rect key="frame" x="39" y="384" width="19" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="not_selected.png"/>
                                 <state key="selected" image="selected.png"/>
+                                <connections>
+                                    <action selector="speedMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Cz-Vl-8qZ"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="speed_curve_not_selected.png" translatesAutoresizingMaskIntoConstraints="NO" id="97V-NR-XyZ">
                                 <rect key="frame" x="113" y="378" width="224" height="112"/>
@@ -122,22 +128,23 @@
                                 <rect key="frame" x="197" y="143" width="57" height="63"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCq-Er-ard">
-                                <rect key="frame" x="158" y="590" width="112" height="116"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="pause.png"/>
-                                <state key="selected" image="playing.png"/>
-                                <state key="highlighted" image="playing.png"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jue-yf-7eh">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jue-yf-7eh">
                                 <rect key="frame" x="57" y="614" width="66" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="clockwise_selected.png"/>
+                                <state key="normal" image="clockwise_not_selected.png"/>
+                                <state key="selected" image="clockwise_selected.png"/>
+                                <connections>
+                                    <action selector="rotationMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gJX-Qv-ewy"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ab-Dw-xrU">
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ab-Dw-xrU">
                                 <rect key="frame" x="306" y="614" width="66" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="counter_clockwise_not selected.png"/>
+                                <state key="selected" image="counter_clockwise_selected.png"/>
+                                <connections>
+                                    <action selector="rotationMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fNb-qc-04d"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PJG-WO-QY0">
                                 <rect key="frame" x="120" y="765" width="39" height="42"/>
@@ -180,14 +187,23 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="s_add.png"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCq-Er-ard">
+                                <rect key="frame" x="161" y="590" width="112" height="116"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="pause.png"/>
+                                <state key="selected" image="playing.png"/>
+                                <state key="highlighted" image="playing.png"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.098040185870000005" green="0.098037473860000002" blue="0.098039291799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="clockwiseButton" destination="Jue-yf-7eh" id="G6K-Pd-jUQ"/>
+                        <outlet property="counterClockwiseButton" destination="0ab-Dw-xrU" id="utQ-3G-GXK"/>
+                        <outlet property="fixedSpeedButton" destination="wLb-W9-BwA" id="fcF-HT-6AI"/>
                         <outlet property="modeSwitch" destination="g9r-11-5kn" id="dJs-jx-Qem"/>
-                        <outlet property="speedModeButton1" destination="wLb-W9-BwA" id="prO-9n-PDf"/>
-                        <outlet property="speedModeButton2" destination="C9F-Mn-9Li" id="dtP-h0-Ws0"/>
+                        <outlet property="segmentSpeedButton" destination="C9F-Mn-9Li" id="byA-DF-584"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -201,8 +217,10 @@
         <image name="3.png" width="63" height="63"/>
         <image name="4.png" width="63" height="63"/>
         <image name="back.png" width="21" height="38"/>
+        <image name="clockwise_not_selected.png" width="90" height="90"/>
         <image name="clockwise_selected.png" width="90" height="90"/>
         <image name="counter_clockwise_not selected.png" width="90" height="90"/>
+        <image name="counter_clockwise_selected.png" width="90" height="90"/>
         <image name="dividing_line.png" width="1" height="80"/>
         <image name="more.png" width="62" height="63"/>
         <image name="my_device.png" width="36" height="36"/>
