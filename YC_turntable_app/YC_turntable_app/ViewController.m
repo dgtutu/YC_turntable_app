@@ -21,6 +21,20 @@
 
 @end
 @implementation ViewController
+#pragma mark 播放暂停
+/**
+
+*/
+
+- (IBAction)playOrPause:(UIButton *)btn {
+    if(btn.selected==YES){
+        btn.selected=NO;
+    }else{
+        btn.selected=YES;
+    }
+}
+
+
 #pragma mark 下拉标签的实现
 /**
 旋转方向的默认设置,懒加载
