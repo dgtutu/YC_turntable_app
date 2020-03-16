@@ -17,6 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *segmentSpeedButton;
 @property (weak, nonatomic) IBOutlet UIButton *clockwiseButton;
 @property (weak, nonatomic) IBOutlet UIButton *counterClockwiseButton;
+@property (weak, nonatomic) IBOutlet UISlider *fixSpeedSlider;
+@property (weak, nonatomic) IBOutlet UISlider *segmentSpeedSlider;
 
 
 @end

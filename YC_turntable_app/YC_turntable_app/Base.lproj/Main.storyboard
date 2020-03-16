@@ -90,10 +90,15 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="i7j-BW-hqA">
                                 <rect key="frame" x="92" y="334" width="266" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.1861991882" green="0.19149228930000001" blue="0.19605803490000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.022502021859999999" green="0.5181549191" blue="0.91573363539999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="thumbTintColor" red="0.030777148899999999" green="0.5134654045" blue="0.89501494169999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="U0H-du-QwV">
                                 <rect key="frame" x="92" y="467" width="266" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.1861991882" green="0.19149228930000001" blue="0.19605803490000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="thumbTintColor" red="0.078357987109999999" green="0.50503498319999995" blue="0.89415770770000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </slider>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wLb-W9-BwA">
                                 <rect key="frame" x="39" y="296" width="19" height="19"/>
@@ -116,10 +121,6 @@
                                     <action selector="speedMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Cz-Vl-8qZ"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="speed_curve_not_selected.png" translatesAutoresizingMaskIntoConstraints="NO" id="97V-NR-XyZ">
-                                <rect key="frame" x="113" y="378" width="224" height="112"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fuW-EW-Qkk">
                                 <rect key="frame" x="66" y="143" width="57" height="63"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -196,6 +197,10 @@
                                     <action selector="playOrPause:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gWo-yr-0FT"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="speed_curve_not_selected.png" translatesAutoresizingMaskIntoConstraints="NO" id="97V-NR-XyZ">
+                                <rect key="frame" x="110" y="384" width="274" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.098040185870000005" green="0.098037473860000002" blue="0.098039291799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -203,9 +208,11 @@
                     <connections>
                         <outlet property="clockwiseButton" destination="Jue-yf-7eh" id="G6K-Pd-jUQ"/>
                         <outlet property="counterClockwiseButton" destination="0ab-Dw-xrU" id="utQ-3G-GXK"/>
+                        <outlet property="fixSpeedSlider" destination="i7j-BW-hqA" id="Dj2-AQ-aUc"/>
                         <outlet property="fixedSpeedButton" destination="wLb-W9-BwA" id="fcF-HT-6AI"/>
                         <outlet property="modeSwitch" destination="g9r-11-5kn" id="dJs-jx-Qem"/>
                         <outlet property="segmentSpeedButton" destination="C9F-Mn-9Li" id="byA-DF-584"/>
+                        <outlet property="segmentSpeedSlider" destination="U0H-du-QwV" id="kFQ-pA-84P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
