@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B51C6949241F7A2A00512467 /* angle.plist in Resources */ = {isa = PBXBuildFile; fileRef = B51C6947241F7A2A00512467 /* angle.plist */; };
+		B51C694A241F7A2A00512467 /* time.plist in Resources */ = {isa = PBXBuildFile; fileRef = B51C6948241F7A2A00512467 /* time.plist */; };
 		B53D733F241F1DBB009235FF /* bg_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = B53D733E241F1DBB009235FF /* bg_slider.png */; };
 		B59E6327241C6DB30090A7E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E6326241C6DB30090A7E0 /* AppDelegate.m */; };
 		B59E632A241C6DB30090A7E0 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E6329241C6DB30090A7E0 /* SceneDelegate.m */; };
@@ -64,6 +66,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B51C6947241F7A2A00512467 /* angle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = angle.plist; sourceTree = "<group>"; };
+		B51C6948241F7A2A00512467 /* time.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = time.plist; sourceTree = "<group>"; };
 		B53D733E241F1DBB009235FF /* bg_slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_slider.png; sourceTree = "<group>"; };
 		B59E6322241C6DB30090A7E0 /* YC_turntable_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YC_turntable_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B59E6325241C6DB30090A7E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -166,6 +170,8 @@
 				B59E6333241C6DB40090A7E0 /* LaunchScreen.storyboard */,
 				B59E6336241C6DB40090A7E0 /* Info.plist */,
 				B59E6337241C6DB40090A7E0 /* main.m */,
+				B51C6947241F7A2A00512467 /* angle.plist */,
+				B51C6948241F7A2A00512467 /* time.plist */,
 				B59E640A241C7A470090A7E0 /* turntablle_icon */,
 			);
 			path = YC_turntable_app;
@@ -380,6 +386,7 @@
 				B59E646D241C7A470090A7E0 /* back.png in Resources */,
 				B59E6332241C6DB40090A7E0 /* Assets.xcassets in Resources */,
 				B59E645D241C7A470090A7E0 /* s2.png in Resources */,
+				B51C6949241F7A2A00512467 /* angle.plist in Resources */,
 				B59E6450241C7A470090A7E0 /* 1.png in Resources */,
 				B59E646A241C7A470090A7E0 /* progress_bar.png in Resources */,
 				B59E646B241C7A470090A7E0 /* not_selected.png in Resources */,
@@ -404,6 +411,7 @@
 				B59E6449241C7A470090A7E0 /* ss3.png in Resources */,
 				B59E644E241C7A470090A7E0 /* s_color.png in Resources */,
 				B59E6469241C7A470090A7E0 /* selected.png in Resources */,
+				B51C694A241F7A2A00512467 /* time.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

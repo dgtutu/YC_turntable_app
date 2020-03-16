@@ -125,12 +125,12 @@
                                     <action selector="speedMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Cz-Vl-8qZ"/>
                                 </connections>
                             </button>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fuW-EW-Qkk">
-                                <rect key="frame" x="66" y="143" width="57" height="63"/>
+                            <pickerView tag="5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fuW-EW-Qkk">
+                                <rect key="frame" x="66" y="143" width="74" height="63"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uuo-q5-ZiB">
-                                <rect key="frame" x="211" y="143" width="57" height="63"/>
+                            <pickerView tag="6" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uuo-q5-ZiB">
+                                <rect key="frame" x="202" y="143" width="71" height="63"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jue-yf-7eh">

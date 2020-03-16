@@ -10,13 +10,19 @@
 
 @interface ViewController ()<UIPickerViewDataSource,UIPickerViewDelegate>
 
+#pragma mark picker的属性
 //旋转角度&时间的picker
 @property (weak, nonatomic) IBOutlet UIPickerView *rotationAnglePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *rotationTimePicker;
+//picker存放的数据
+@property (strong,nonatomic) NSArray *rotationAngleData;
+@property (strong,nonatomic) NSArray *rotationTimeData;
 
+#pragma mark 开关的属性
 //无限模式开关
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 
+#pragma mark 按钮和滑条
 //旋转速度模式的旋转
 @property (weak, nonatomic) IBOutlet UIButton *fixedSpeedButton;
 @property (weak, nonatomic) IBOutlet UIButton *segmentSpeedButton;
@@ -31,6 +37,45 @@
 
 #pragma mark 旋转角度&时间的picker实现
 
+//时间数据和角度数据
+-(NSArray *)rotationAngleData{
+//    NSMutableArray *arrM = [NSMutableArray array];
+//    for (int i=1; i<=3; i++) {
+//        NSNumber *nn=[NSNumber numberWithInt:i*10];
+//        [arrM addObject:nn];
+//    }
+//   // NSLog(@"%@",arrM);
+//    _rotationAngleData=[NSArray arrayWithArray:arrM];
+//    arrM=nil;
+//
+    
+    if(_rotationAngleData==nil){
+        NSString *path=[[NSBundle mainBundle]
+        pathForResource:@"angle.plist" ofType:nil];
+        _rotationAngleData=[NSArray arrayWithContentsOfFile:path];
+    }
+        //NSLog(@"AAAA%@",_rotationAngleData);
+    return _rotationAngleData;
+}
+
+-(NSArray *)rotationTimeData{
+//    NSMutableArray *arrM = [NSMutableArray array];
+//    for (int i=1; i<=10; i++) {
+//        NSNumber *nn=[NSNumber numberWithInt:i];
+//        [arrM addObject:nn];
+//    }
+//    _rotationTimeData=[NSArray arrayWithArray:arrM];
+//    arrM=nil;
+    if(_rotationTimeData==nil){
+           NSString *path=[[NSBundle mainBundle]
+           pathForResource:@"time.plist" ofType:nil];
+           _rotationTimeData=[NSArray arrayWithContentsOfFile:path];
+       }
+     //   NSLog(@"time%@",_rotationTimeData);
+       return _rotationTimeData;
+    return _rotationTimeData;
+}
+
 // 每一列的宽度
 //- (CGFloat)
 //pickerView:(UIPickerView *)
@@ -38,6 +83,24 @@
 //component API_UNAVAILABLE(tvos){
 //    
 //}
+////每行展示的内容,带属性的字符串(颜色,大小,阴影,描边)
+//- (nullable NSAttributedString *)
+//pickerView:(UIPickerView *)pickerView
+//attributedTitleForRow:(NSInteger)row
+//forComponent:(NSInteger)component
+//API_AVAILABLE(ios(6.0))
+//API_UNAVAILABLE(tvos){
+//
+//}
+//每一行展示什么样的视图
+//- (UIView *)
+//pickerView:(UIPickerView *)
+//pickerView viewForRow:(NSInteger)
+//row forComponent:(NSInteger)
+//component reusingView:(nullable UIView *)
+//view API_UNAVAILABLE(tvos){}
+
+//当前选中的是哪一列的哪一行
 
 // 每一行的高度
 - (CGFloat)pickerView:(UIPickerView *)pickerView
@@ -50,33 +113,30 @@ rowHeightForComponent:(NSInteger)component API_UNAVAILABLE(tvos){
 pickerView:(UIPickerView *)pickerView
 titleForRow :(NSInteger)row
 forComponent :(NSInteger)component API_UNAVAILABLE(tvos){
-    
-    return @"bb";
+    if (pickerView.tag == 5){
+        return self.rotationAngleData[row];
+    }else if(pickerView.tag == 6){
+       return self.rotationTimeData[row];
+        
+    }
+    return 0;
 }
 
-////每行展示的内容,带属性的字符串(颜色,大小,阴影,描边)
-//- (nullable NSAttributedString *)
-//pickerView:(UIPickerView *)pickerView
-//attributedTitleForRow:(NSInteger)row
-//forComponent:(NSInteger)component
-//API_AVAILABLE(ios(6.0))
-//API_UNAVAILABLE(tvos){
-//
-//}
-
-//每一行展示什么样的视图
-//- (UIView *)
-//pickerView:(UIPickerView *)
-//pickerView viewForRow:(NSInteger)
-//row forComponent:(NSInteger)
-//component reusingView:(nullable UIView *)
-//view API_UNAVAILABLE(tvos){}
-
-//当前选中的是哪一列的哪一行
+//当前展示多少行多少列
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow
                   :(NSInteger)row inComponent
                   :(NSInteger)component API_UNAVAILABLE(tvos){
-    NSLog(@"当前列:%ld 当前行:%ld",component,row);
+    NSString *string =[NSString new];
+  
+    if (pickerView.tag == 5){
+        string =self.rotationAngleData[row];
+          NSLog(@"当前angle: %@",string);
+       }else if(pickerView.tag == 6){
+           string =self.rotationTimeData[row];
+             NSLog(@"当前time: %@",string);
+       }
+    
+    
 }
 
 // 返回总共有多少列要显示
@@ -88,7 +148,17 @@ forComponent :(NSInteger)component API_UNAVAILABLE(tvos){
 // 返回每一列有多少行
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent
                        :(NSInteger)component{
-    return 10;
+    if (pickerView.tag == 5){
+       NSLog(@"tag ==5");
+        return self.rotationAngleData.count;
+        
+    }else if(pickerView.tag == 6){
+        NSLog(@"tag ==6");
+       return self.rotationTimeData.count;
+        
+    }
+    return 0;
+    
 }
 
 -(UIPickerView *)rotationAnglePicker{
@@ -108,13 +178,15 @@ forComponent :(NSInteger)component API_UNAVAILABLE(tvos){
     _segmentSpeedSlider.bounds=CGRectMake(0, 0, 300, 23);
 
     _segmentSpeedSlider.layer.cornerRadius=10.0;
-    _segmentSpeedSlider.layer.backgroundColor=[UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
+    _segmentSpeedSlider.layer.backgroundColor=
+    [UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
     return _segmentSpeedSlider;
 }
 -(UISlider *)fixSpeedSlider{
     _fixSpeedSlider.bounds=CGRectMake(0, 0, 300, 23);
     _fixSpeedSlider.layer.cornerRadius=10.0;
-    _fixSpeedSlider.layer.backgroundColor=[UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
+    _fixSpeedSlider.layer.backgroundColor=
+    [UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
     return _fixSpeedSlider;
 }
 
@@ -245,6 +317,7 @@ forComponent :(NSInteger)component API_UNAVAILABLE(tvos){
     [self.view addSubview:self.speedLebel];
     [self.view addSubview:self.rotationAnglePicker];
     [self.view addSubview:self.rotationTimePicker];
+    
 //  [self.modeSwitchaddTarget:self action:@selector(modeSwitchChange:) forControlEvents:UIControlEventValueChanged];
 }
 
