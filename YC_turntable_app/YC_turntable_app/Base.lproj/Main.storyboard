@@ -222,6 +222,8 @@
                         <outlet property="fixSpeedSlider" destination="i7j-BW-hqA" id="1U2-Vb-vPU"/>
                         <outlet property="fixedSpeedButton" destination="wLb-W9-BwA" id="fcF-HT-6AI"/>
                         <outlet property="modeSwitch" destination="g9r-11-5kn" id="dJs-jx-Qem"/>
+                        <outlet property="rotationAnglePicker" destination="fuW-EW-Qkk" id="sUR-gH-sbN"/>
+                        <outlet property="rotationTimePicker" destination="Uuo-q5-ZiB" id="7WR-Nn-Vvm"/>
                         <outlet property="segmentSpeedButton" destination="C9F-Mn-9Li" id="byA-DF-584"/>
                         <outlet property="segmentSpeedSlider" destination="U0H-du-QwV" id="Qvp-Tm-M7j"/>
                         <outlet property="speedValueLebel" destination="ycq-Ip-eGl" id="676-Kq-5AM"/>
