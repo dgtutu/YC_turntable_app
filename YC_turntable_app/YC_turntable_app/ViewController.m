@@ -23,14 +23,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *counterClockwiseButton;
 @property (weak, nonatomic) IBOutlet UISlider *fixSpeedSlider;
 @property (weak, nonatomic) IBOutlet UISlider *segmentSpeedSlider;
-
-@property (weak, nonatomic) IBOutlet UILabel *speedLebel;
+@property (weak,nonatomic) NSString *speedValuel;
+@property (weak, nonatomic) IBOutlet UILabel *speedValueLebel;
 
 @end
 @implementation ViewController
 
-#pragma mark 滑块背景圆角化
-
+#pragma mark 滑块背景颜色与圆角化
 -(UISlider *)segmentSpeedSlider{
     _segmentSpeedSlider.bounds=CGRectMake(0, 0, 300, 23);
 
@@ -38,8 +37,6 @@
     _segmentSpeedSlider.layer.backgroundColor=[UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
     return _segmentSpeedSlider;
 }
-
-
 -(UISlider *)fixSpeedSlider{
     _fixSpeedSlider.bounds=CGRectMake(0, 0, 300, 23);
     _fixSpeedSlider.layer.cornerRadius=10.0;
@@ -47,23 +44,17 @@
     return _fixSpeedSlider;
 }
 
-#pragma mark 速度s标签的圆角化
-/**
-
-*/
+#pragma mark 速度标签的圆角化与速度值的显示
 -(UILabel *)speedLebel{
-    _speedLebel.layer.cornerRadius=5.0;
-    _speedLebel.layer.backgroundColor=[UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
-    return _speedLebel;
+    _speedValueLebel.layer.cornerRadius=5.0;
+    _speedValueLebel.layer.backgroundColor=[UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
+    self.speedValuel=[NSString stringWithFormat:@"%.0f%%",self.fixSpeedSlider.value*100];
+    _speedValueLebel.textColor=[UIColor whiteColor];
+    _speedValueLebel.text=self.speedValuel;
+    return _speedValueLebel;
 }
 
-
 #pragma mark 播放暂停
-/**
-
-*/
-
-
 - (IBAction)playOrPause:(UIButton *)btn {
     if(btn.selected==YES){
         btn.selected=NO;
@@ -72,13 +63,10 @@
     }
 }
 
-
 #pragma mark 下拉标签的实现
 /**
 旋转方向的默认设置,懒加载
 */
-
-
 
 #pragma mark 旋转方向的设置
 /**
@@ -139,32 +127,23 @@
     }
 }
 
+#pragma mark 滑条的实时显示
 - (IBAction)segmentSpeedSlider:(UISlider *)sender {
 }
 
 - (IBAction)fixSpeedSlider:(UISlider *)sender {
+    self.speedValuel=[NSString stringWithFormat:@"%.0f%%",self.fixSpeedSlider.value*100];
+    self.speedValueLebel.text=self.speedValuel;
 }
 
 
 #pragma mark 模式开关切换
 /**
- * 开关切换事件监听回调方法
- */
-//- (void) modeSwitchChange:(UISwitch*)sw {
-//    if(sw.on == YES) {
-//        NSLog(@"开关切换为开");
-//    } else if(sw.on == NO) {
-//        NSLog(@"开关切换为关");
-//    }
-//}
-
-
-/**
  * 无限模式开关懒加载
  */
 - (UISwitch *)modeSwitch {
     NSLog(@"模式切换按钮加载中");
-    [_modeSwitch setOnTintColor: [UIColor blueColor]];
+    [_modeSwitch setOnTintColor: [UIColor colorWithRed:0/255.0 green:121/255.0 blue:221/255.0 alpha:1]];
     [_modeSwitch setTintColor:[UIColor grayColor]];
     _modeSwitch.transform = CGAffineTransformMakeScale(0.75, 0.75);
     //设置开关大小
