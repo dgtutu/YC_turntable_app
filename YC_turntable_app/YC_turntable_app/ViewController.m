@@ -9,7 +9,11 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+
+
+
 //无限模式开关
+
 @property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 
 //旋转速度模式的旋转
@@ -20,13 +24,45 @@
 @property (weak, nonatomic) IBOutlet UISlider *fixSpeedSlider;
 @property (weak, nonatomic) IBOutlet UISlider *segmentSpeedSlider;
 
+@property (weak, nonatomic) IBOutlet UILabel *speedLebel;
 
 @end
 @implementation ViewController
+
+#pragma mark 滑块背景圆角化
+
+-(UISlider *)segmentSpeedSlider{
+    _segmentSpeedSlider.bounds=CGRectMake(0, 0, 300, 23);
+
+    _segmentSpeedSlider.layer.cornerRadius=10.0;
+    _segmentSpeedSlider.layer.backgroundColor=[UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
+    return _segmentSpeedSlider;
+}
+
+
+-(UISlider *)fixSpeedSlider{
+    _fixSpeedSlider.bounds=CGRectMake(0, 0, 300, 23);
+    _fixSpeedSlider.layer.cornerRadius=10.0;
+    _fixSpeedSlider.layer.backgroundColor=[UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
+    return _fixSpeedSlider;
+}
+
+#pragma mark 速度s标签的圆角化
+/**
+
+*/
+-(UILabel *)speedLebel{
+    _speedLebel.layer.cornerRadius=5.0;
+    _speedLebel.layer.backgroundColor=[UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
+    return _speedLebel;
+}
+
+
 #pragma mark 播放暂停
 /**
 
 */
+
 
 - (IBAction)playOrPause:(UIButton *)btn {
     if(btn.selected==YES){
@@ -79,6 +115,7 @@
 -(UIButton *)fixedSpeedButton{
      NSLog(@"速度模式按钮加载中");
     _fixedSpeedButton.selected=YES;
+    self.segmentSpeedSlider.enabled=NO;
     return _fixedSpeedButton;
 }
 
@@ -90,14 +127,23 @@
         button.selected=YES;
         UIButton *but=(UIButton*)[self.view viewWithTag:2];
         but.selected=NO;
+         self.fixSpeedSlider.enabled=YES;
+         self.segmentSpeedSlider.enabled=NO;
     }else if (button.tag==2){
         button.selected=YES;
         UIButton *but=(UIButton*)[self.view viewWithTag:1];
         but.selected=NO;
+        self.fixSpeedSlider.enabled=NO;
+        self.segmentSpeedSlider.enabled=YES;
+        
     }
 }
 
+- (IBAction)segmentSpeedSlider:(UISlider *)sender {
+}
 
+- (IBAction)fixSpeedSlider:(UISlider *)sender {
+}
 
 
 #pragma mark 模式开关切换
@@ -140,6 +186,9 @@
     [self.view addSubview:self.modeSwitch];
     [self.view addSubview:self.fixedSpeedButton];
     [self.view addSubview:self.clockwiseButton];
+    [self.view addSubview:self.segmentSpeedSlider ];
+    [self.view addSubview:self.fixSpeedSlider];
+    [self.view addSubview:self.speedLebel];
 //  [self.modeSwitchaddTarget:self action:@selector(modeSwitchChange:) forControlEvents:UIControlEventValueChanged];
 }
 

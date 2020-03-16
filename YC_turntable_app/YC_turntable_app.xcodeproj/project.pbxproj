@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B53D733F241F1DBB009235FF /* bg_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = B53D733E241F1DBB009235FF /* bg_slider.png */; };
 		B59E6327241C6DB30090A7E0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E6326241C6DB30090A7E0 /* AppDelegate.m */; };
 		B59E632A241C6DB30090A7E0 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E6329241C6DB30090A7E0 /* SceneDelegate.m */; };
 		B59E632D241C6DB30090A7E0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E632C241C6DB30090A7E0 /* ViewController.m */; };
@@ -63,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B53D733E241F1DBB009235FF /* bg_slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_slider.png; sourceTree = "<group>"; };
 		B59E6322241C6DB30090A7E0 /* YC_turntable_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YC_turntable_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B59E6325241C6DB30090A7E0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B59E6326241C6DB30090A7E0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 		B59E643F241C7A470090A7E0 /* 6_background */ = {
 			isa = PBXGroup;
 			children = (
+				B53D733E241F1DBB009235FF /* bg_slider.png */,
 				B59E6440241C7A470090A7E0 /* background.png */,
 				B59E6441241C7A470090A7E0 /* dark_bar.png */,
 			);
@@ -386,6 +389,7 @@
 				B59E644A241C7A470090A7E0 /* ss6.png in Resources */,
 				B59E6448241C7A470090A7E0 /* ss2.png in Resources */,
 				B59E6443241C7A470090A7E0 /* cancel.png in Resources */,
+				B53D733F241F1DBB009235FF /* bg_slider.png in Resources */,
 				B59E645E241C7A470090A7E0 /* clockwise_selected.png in Resources */,
 				B59E6330241C6DB40090A7E0 /* Main.storyboard in Resources */,
 				B59E6453241C7A470090A7E0 /* switch_open.png in Resources */,
