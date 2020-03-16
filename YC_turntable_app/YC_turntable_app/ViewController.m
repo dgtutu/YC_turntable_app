@@ -76,37 +76,22 @@
     return _rotationTimeData;
 }
 
-// 每一列的宽度
-//- (CGFloat)
-//pickerView:(UIPickerView *)
-//pickerView widthForComponent:(NSInteger)
-//component API_UNAVAILABLE(tvos){
-//    
-//}
-////每行展示的内容,带属性的字符串(颜色,大小,阴影,描边)
-//- (nullable NSAttributedString *)
-//pickerView:(UIPickerView *)pickerView
-//attributedTitleForRow:(NSInteger)row
-//forComponent:(NSInteger)component
-//API_AVAILABLE(ios(6.0))
-//API_UNAVAILABLE(tvos){
-//
-//}
-//每一行展示什么样的视图
-//- (UIView *)
-//pickerView:(UIPickerView *)
-//pickerView viewForRow:(NSInteger)
-//row forComponent:(NSInteger)
-//component reusingView:(nullable UIView *)
-//view API_UNAVAILABLE(tvos){}
-
-//当前选中的是哪一列的哪一行
-
-// 每一行的高度
-- (CGFloat)pickerView:(UIPickerView *)pickerView
-rowHeightForComponent:(NSInteger)component API_UNAVAILABLE(tvos){
-    return 50;
+/*
+//每一列的宽度
+- (CGFloat)
+pickerView:(UIPickerView *)
+pickerView widthForComponent:(NSInteger)
+component API_UNAVAILABLE(tvos){
+    
 }
+
+//每一行展示什么样的视图
+- (UIView *)
+pickerView:(UIPickerView *)
+pickerView viewForRow:(NSInteger)
+row forComponent:(NSInteger)
+component reusingView:(nullable UIView *)
+view API_UNAVAILABLE(tvos){}
 
 //每行展示的内容
 - (nullable NSString *)
@@ -121,6 +106,35 @@ forComponent :(NSInteger)component API_UNAVAILABLE(tvos){
     }
     return 0;
 }
+**/
+
+// 每一行的高度
+- (CGFloat)pickerView:(UIPickerView *)pickerView
+rowHeightForComponent:(NSInteger)component API_UNAVAILABLE(tvos){
+    return 50;
+}
+
+//每行展示的内容,带属性的字符串(颜色,大小,阴影,描边)
+- (nullable NSAttributedString *)
+pickerView:(UIPickerView *)pickerView
+attributedTitleForRow:(NSInteger)row
+forComponent:(NSInteger)component
+API_AVAILABLE(ios(6.0))
+API_UNAVAILABLE(tvos){
+    NSDictionary * textProperty = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    if (pickerView.tag == 5){
+        NSAttributedString *NSA = [[NSAttributedString alloc] initWithString:self.rotationAngleData[row] attributes:textProperty];
+           return NSA;
+       }else if(pickerView.tag == 6){
+           NSAttributedString *NSA = [[NSAttributedString alloc] initWithString:self.rotationTimeData[row] attributes:textProperty];
+              return NSA;
+        
+           
+       }
+       return 0;
+}
+
+
 
 //当前展示多少行多少列
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow
@@ -135,8 +149,6 @@ forComponent :(NSInteger)component API_UNAVAILABLE(tvos){
            string =self.rotationTimeData[row];
              NSLog(@"当前time: %@",string);
        }
-    
-    
 }
 
 // 返回总共有多少列要显示
