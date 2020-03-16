@@ -111,7 +111,7 @@ forComponent :(NSInteger)component API_UNAVAILABLE(tvos){
 // 每一行的高度
 - (CGFloat)pickerView:(UIPickerView *)pickerView
 rowHeightForComponent:(NSInteger)component API_UNAVAILABLE(tvos){
-    return 50;
+    return 30;
 }
 
 //每行展示的内容,带属性的字符串(颜色,大小,阴影,描边)
@@ -121,20 +121,25 @@ attributedTitleForRow:(NSInteger)row
 forComponent:(NSInteger)component
 API_AVAILABLE(ios(6.0))
 API_UNAVAILABLE(tvos){
-    NSDictionary * textProperty = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    NSDictionary * textProperty =
+  @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     if (pickerView.tag == 5){
-        NSAttributedString *NSA = [[NSAttributedString alloc] initWithString:self.rotationAngleData[row] attributes:textProperty];
+        NSAttributedString *NSA =
+        [[NSAttributedString alloc]
+         initWithString:self.rotationAngleData[row]
+         attributes:textProperty];
            return NSA;
        }else if(pickerView.tag == 6){
-           NSAttributedString *NSA = [[NSAttributedString alloc] initWithString:self.rotationTimeData[row] attributes:textProperty];
+           NSAttributedString *NSA =
+           [[NSAttributedString alloc]
+            initWithString:self.rotationTimeData[row]
+            attributes:textProperty];
               return NSA;
         
            
        }
        return 0;
 }
-
-
 
 //当前展示多少行多少列
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow
