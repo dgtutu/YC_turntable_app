@@ -10,6 +10,11 @@
 
 @interface ViewController ()<UIPickerViewDataSource,UIPickerViewDelegate>
 
+#pragma mark Scroll view的属性
+@property (assign,nonatomic) int pointNumber;
+@property (assign,nonatomic) int pointPlace;
+@property (weak, nonatomic) IBOutlet UIScrollView *pointScroll;
+
 #pragma mark picker的属性
 //旋转角度&时间的picker
 @property (weak, nonatomic) IBOutlet UIPickerView *rotationAnglePicker;
@@ -34,6 +39,57 @@
 @property (weak, nonatomic) IBOutlet UILabel *speedValueLebel;
 @end
 @implementation ViewController
+#pragma mark 弹窗
+
+- (IBAction)editPointWindow:(UIButton *)btn {
+    
+}
+
+#pragma mark 增加滚动界面的速度点
+- (IBAction)addSpeedPoint:(UIButton *)btn {
+    NSLog(@"cnmmmmm");
+    UILabel *label=[UILabel new];
+    NSLog(@"%d",self.pointNumber);
+    label.text=[NSString stringWithFormat:@"%d",self.pointNumber++];
+    label.textColor=[UIColor blackColor];
+    label.textAlignment=NSTextAlignmentCenter;
+    
+    label.frame=CGRectMake(self.pointPlace, 0, 40, 40);
+    self.pointPlace=self.pointPlace+50;
+    self.pointScroll.contentSize=CGSizeMake(self.pointPlace, 0);
+    label.layer.cornerRadius=20.0;
+    CGFloat rc =arc4random()%255/255.0;
+    CGFloat gc =arc4random()%255/255.0;
+    CGFloat bc =arc4random()%255/255.0;
+    while( rc==gc && rc==bc && gc==bc){
+        rc =arc4random()%255/255.0;
+        gc =arc4random()%255/255.0;
+        bc =arc4random()%255/255.0;
+    }
+    label.layer.backgroundColor=
+    [UIColor colorWithRed:rc
+                    green:gc
+                     blue:bc
+                    alpha:1].CGColor;
+    
+    [self.pointScroll addSubview:label];
+        
+        
+}
+
+#pragma mark scrollView
+-(UIScrollView *)pointScroll{
+//    UIView *redView =[[UIView alloc]init];
+//    redView.backgroundColor=[UIColor redColor];
+//    redView.frame =CGRectMake(0, 0, 50, 50);
+//    [_pointScroll addSubview:redView];
+    _pointScroll.contentSize=CGSizeMake(self.pointPlace, 0);//这个滚动的长度需要动态生成
+    _pointScroll.clipsToBounds=YES;//默认是yes,超出边框的会被裁减
+  
+    return _pointScroll;
+}
+
+
 
 #pragma mark 旋转角度&时间的picker实现
 
@@ -326,6 +382,8 @@ API_UNAVAILABLE(tvos){
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     NSLog(@"0000");
+    self.pointNumber=1;
+    self.pointPlace=0;
     [self.view addSubview:self.modeSwitch];
     [self.view addSubview:self.fixedSpeedButton];
     [self.view addSubview:self.clockwiseButton];
@@ -334,7 +392,7 @@ API_UNAVAILABLE(tvos){
     [self.view addSubview:self.speedLebel];
     [self.view addSubview:self.rotationAnglePicker];
     [self.view addSubview:self.rotationTimePicker];
-    
+    [self.view addSubview:self.pointScroll];
 //  [self.modeSwitchaddTarget:self action:@selector(modeSwitchChange:) forControlEvents:UIControlEventValueChanged];
 }
 

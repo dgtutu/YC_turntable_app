@@ -147,31 +147,6 @@
                                     <action selector="rotationMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fNb-qc-04d"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PJG-WO-QY0">
-                                <rect key="frame" x="120" y="765" width="39" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="2.png"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rnj-v9-qcL">
-                                <rect key="frame" x="167" y="765" width="39" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="1.png"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zle-4E-sUg">
-                                <rect key="frame" x="215" y="765" width="39" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="3.png"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ez4-W4-6C2">
-                                <rect key="frame" x="262" y="765" width="39" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="4.png"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yuG-mC-Lgr">
-                                <rect key="frame" x="309" y="765" width="39" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="more.png"/>
-                            </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="g9r-11-5kn">
                                 <rect key="frame" x="347" y="159" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -187,6 +162,9 @@
                                 <rect key="frame" x="66" y="765" width="39" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="s_add.png"/>
+                                <connections>
+                                    <action selector="addSpeedPoint:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jgm-cn-Xkq"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCq-Er-ard">
                                 <rect key="frame" x="161" y="590" width="112" height="116"/>
@@ -212,6 +190,20 @@
                                 <rect key="frame" x="199" y="119" width="71" height="110"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zVC-jU-9LN">
+                                <rect key="frame" x="115" y="765" width="191" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="gVw-oG-yph"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="MWw-ee-lSO"/>
+                            </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yuG-mC-Lgr">
+                                <rect key="frame" x="317" y="765" width="39" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="more.png"/>
+                                <connections>
+                                    <action selector="editPointWindow:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Rf-zB-p44"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.098040185870000005" green="0.098037473860000002" blue="0.098039291799999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -222,6 +214,7 @@
                         <outlet property="fixSpeedSlider" destination="i7j-BW-hqA" id="1U2-Vb-vPU"/>
                         <outlet property="fixedSpeedButton" destination="wLb-W9-BwA" id="fcF-HT-6AI"/>
                         <outlet property="modeSwitch" destination="g9r-11-5kn" id="dJs-jx-Qem"/>
+                        <outlet property="pointScroll" destination="zVC-jU-9LN" id="azn-Df-pzW"/>
                         <outlet property="rotationAnglePicker" destination="fuW-EW-Qkk" id="sUR-gH-sbN"/>
                         <outlet property="rotationTimePicker" destination="Uuo-q5-ZiB" id="7WR-Nn-Vvm"/>
                         <outlet property="segmentSpeedButton" destination="C9F-Mn-9Li" id="byA-DF-584"/>
@@ -235,10 +228,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1.png" width="63" height="63"/>
-        <image name="2.png" width="63" height="63"/>
-        <image name="3.png" width="63" height="63"/>
-        <image name="4.png" width="63" height="63"/>
         <image name="back.png" width="21" height="38"/>
         <image name="clockwise_not_selected.png" width="90" height="90"/>
         <image name="clockwise_selected.png" width="90" height="90"/>
