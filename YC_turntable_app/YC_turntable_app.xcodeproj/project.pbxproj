@@ -63,6 +63,7 @@
 		B59E646D241C7A470090A7E0 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = B59E643E241C7A470090A7E0 /* back.png */; };
 		B59E646E241C7A470090A7E0 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = B59E6440241C7A470090A7E0 /* background.png */; };
 		B59E646F241C7A470090A7E0 /* dark_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = B59E6441241C7A470090A7E0 /* dark_bar.png */; };
+		B5DD424D2421AEE40051939B /* UIAlertController+TapGesAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DD424C2421AEE40051939B /* UIAlertController+TapGesAlertController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -127,6 +128,8 @@
 		B59E643E241C7A470090A7E0 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		B59E6440241C7A470090A7E0 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		B59E6441241C7A470090A7E0 /* dark_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dark_bar.png; sourceTree = "<group>"; };
+		B5DD424B2421AEE40051939B /* UIAlertController+TapGesAlertController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+TapGesAlertController.h"; sourceTree = "<group>"; };
+		B5DD424C2421AEE40051939B /* UIAlertController+TapGesAlertController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+TapGesAlertController.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +165,8 @@
 				B59E6325241C6DB30090A7E0 /* AppDelegate.h */,
 				B59E6326241C6DB30090A7E0 /* AppDelegate.m */,
 				B59E6328241C6DB30090A7E0 /* SceneDelegate.h */,
+				B5DD424B2421AEE40051939B /* UIAlertController+TapGesAlertController.h */,
+				B5DD424C2421AEE40051939B /* UIAlertController+TapGesAlertController.m */,
 				B59E6329241C6DB30090A7E0 /* SceneDelegate.m */,
 				B59E632B241C6DB30090A7E0 /* ViewController.h */,
 				B59E632C241C6DB30090A7E0 /* ViewController.m */,
@@ -426,6 +431,7 @@
 				B59E6327241C6DB30090A7E0 /* AppDelegate.m in Sources */,
 				B59E6338241C6DB40090A7E0 /* main.m in Sources */,
 				B59E632A241C6DB30090A7E0 /* SceneDelegate.m in Sources */,
+				B5DD424D2421AEE40051939B /* UIAlertController+TapGesAlertController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
