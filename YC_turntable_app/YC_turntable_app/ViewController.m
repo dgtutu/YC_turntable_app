@@ -25,7 +25,7 @@
 @property (assign,nonatomic) int pointNumber;
 @property (assign,nonatomic) int pointPlace;
 @property (weak, nonatomic) IBOutlet UIScrollView *pointScroll;
-//@property (weak, nonatomic) UIScrollView *alertControllerPointScroll;
+@property (strong, nonatomic) UIScrollView *alertControllerPointScroll;
 
 #pragma mark picker的属性
 //旋转角度&时间的picker
@@ -50,11 +50,13 @@
 @property (weak, nonatomic) NSString *speedValuel;
 @property (weak, nonatomic) IBOutlet UILabel *speedValueLebel;
 @end
+
 @implementation ViewController
 
 #pragma mark 速度点的字典
 //一个标签对应一个button,每次点击之后同时创建,根据在不同的界面显示标签或者button
 -(NSArray *)addSpeedPointArray{
+    
     UIColor *pointColor=self.pointColor;
     UILabel *label=[UILabel new];
     label.text=
@@ -65,7 +67,7 @@
     label.layer.cornerRadius=20.0;
     label.layer.backgroundColor= pointColor.CGColor;
     [self.speedPointLabelArray addObject:label];
-    
+
     UIButton *button=[[UIButton alloc]init];
     [button setTitle:
      [NSString stringWithFormat:@"%d",self.pointNumber]
@@ -98,68 +100,66 @@
     return _pointColor;
 }
 
-#pragma mark 弹窗界面的增加速度按钮的实现
-//弹窗界面的增加速度按钮的实现
+#pragma mark 弹窗界面的增加速度点按钮的实现
 - (void)clickAddbtn:(UIButton *)btn {
     NSArray *arr =self.addSpeedPointArray;
     UIButton *speedButton =[arr[1] objectAtIndex:self.pointNumber-2];
     UILabel *label=[arr[0] objectAtIndex:self.pointNumber-2];
     self.pointScroll.contentSize=CGSizeMake(self.pointPlace, 0);
-    CGPoint offset=self.pointScroll.contentOffset;
-    offset.x=0;
-    self.pointScroll.contentOffset=offset;
-    label.layer.cornerRadius=20.0;
-    label.layer.backgroundColor= self.pointColor.CGColor;
     [self.pointScroll addSubview:label];
-    
-   [self.alertController.view addSubview:speedButton];
+    [self.alertController.view addSubview:speedButton];
 }
 
 #pragma mark 弹窗
 
 - (IBAction)editPointWindow:(UIButton *)btn {
-  self.alertController  =
+    self.alertController  =
     [UIAlertController alertControllerWithTitle:@"\n"
                                         message:@" \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n"
                                  preferredStyle:UIAlertControllerStyleAlert];
-    //按钮监听的点击实现
+    
     UIButton *adbtn=[[UIButton alloc]init];
-    adbtn.frame = CGRectMake(10, 10, 30, 30);
-    [adbtn setImage:[UIImage imageNamed:@"s_add"]
-           forState:UIControlStateNormal];
-    [adbtn addTarget:self action:@selector(clickAddbtn:)
-    forControlEvents:UIControlEventTouchUpInside];
-    [self.alertController.view addSubview:adbtn];
-    
-    
-    
-   // [adbtn addTarget:self action:@selector(addSpeedPoint:) forControlEvents:UIControlEventTouchUpInside];
+      adbtn.frame = CGRectMake(10,10, 20, 20);
+      [adbtn setImage:[UIImage imageNamed:@"s_add"]
+                  forState:UIControlStateNormal];
+      [adbtn addTarget:self action:@selector(clickAddbtn:)
+           forControlEvents:UIControlEventTouchUpInside];
+     // [self.alertController.view addSubview:self.alertControllerPointScroll];
+      [self.alertController.view addSubview:adbtn];
+    //
+    //
+    //-----------------------
+    for (UIButton * speedButton in self.speedPointButtonArray) {
+        [self.alertController.view addSubview:speedButton];
+
+    }
+    //---------
+    //[self.alertController.view addSubview:self.alertControllerPointScroll];
     [self presentViewController:self.alertController animated:YES completion:^{
         [self.alertController tapGesAlert];
     }];
 }
 
-#pragma mark 增加滚动界面的速度点
+#pragma mark 主滑动界面增加速度点按钮的实现
 - (IBAction)addSpeedPoint:(UIButton *)btn {
-    NSMutableArray *arrM=self.addSpeedPointArray[0];
-    UILabel *label=[arrM objectAtIndex:self.pointNumber-2];
+    NSArray *arr =self.addSpeedPointArray;
+    UILabel *label=[arr[0] objectAtIndex:self.pointNumber-2];
     //self.pointNumber++;
     self.pointScroll.contentSize=CGSizeMake(self.pointPlace, 0);
-    CGPoint offset=self.pointScroll.contentOffset;
-    offset.x=0;
-    self.pointScroll.contentOffset=offset;
-    label.layer.cornerRadius=20.0;
-    label.layer.backgroundColor= self.pointColor.CGColor;
     [self.pointScroll addSubview:label];
 }
 
 #pragma mark scrollView
-//弹窗里的滚动界面
+////弹窗里的滚动界面
 //-(UIScrollView *)alertControllerPointScroll{
+//
+//    _alertControllerPointScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0,0,270,300)];
 //    _alertControllerPointScroll.contentSize=
-//    CGSizeMake(300, 300);
+//    CGSizeMake(270 , 600);
 //    _alertControllerPointScroll.backgroundColor=[UIColor redColor];
-//    NSLog(@"滚动界面");
+//    _alertControllerPointScroll.clipsToBounds=YES;//默认是yes,超出边框的会被裁减
+//    
+//   
 //    return _alertControllerPointScroll;
 //}
 
@@ -167,6 +167,7 @@
 -(UIScrollView *)pointScroll{
     _pointScroll.contentSize=
     CGSizeMake(self.pointPlace, 0);//这个滚动的长度需要动态生成
+//    _pointScroll.backgroundColor=[UIColor redColor];
     _pointScroll.clipsToBounds=YES;//默认是yes,超出边框的会被裁减
     return _pointScroll;
 }
@@ -174,16 +175,6 @@
 #pragma mark 旋转角度&时间的picker实现
 //时间数据和角度数据
 -(NSArray *)rotationAngleData{
-//    NSMutableArray *arrM = [NSMutableArray array];
-//    for (int i=1; i<=3; i++) {
-//        NSNumber *nn=[NSNumber numberWithInt:i*10];
-//        [arrM addObject:nn];
-//    }
-//   // NSLog(@"%@",arrM);
-//    _rotationAngleData=[NSArray arrayWithArray:arrM];
-//    arrM=nil;
-//
-    
     if(_rotationAngleData==nil){
         NSString *path=[[NSBundle mainBundle]
         pathForResource:@"angle.plist" ofType:nil];
@@ -202,37 +193,7 @@
        return _rotationTimeData;
     return _rotationTimeData;
 }
-/*
-//每一列的宽度
-- (CGFloat)
-pickerView:(UIPickerView *)
-pickerView widthForComponent:(NSInteger)
-component API_UNAVAILABLE(tvos){
-    
-}
 
-//每一行展示什么样的视图
-- (UIView *)
-pickerView:(UIPickerView *)
-pickerView viewForRow:(NSInteger)
-row forComponent:(NSInteger)
-component reusingView:(nullable UIView *)
-view API_UNAVAILABLE(tvos){}
-
-//每行展示的内容
-- (nullable NSString *)
-pickerView:(UIPickerView *)pickerView
-titleForRow :(NSInteger)row
-forComponent :(NSInteger)component API_UNAVAILABLE(tvos){
-    if (pickerView.tag == 5){
-        return self.rotationAngleData[row];
-    }else if(pickerView.tag == 6){
-       return self.rotationTimeData[row];
-        
-    }
-    return 0;
-}
-**/
 // 每一行的高度
 - (CGFloat)pickerView:(UIPickerView *)pickerView
 rowHeightForComponent:(NSInteger)component API_UNAVAILABLE(tvos){
@@ -450,7 +411,11 @@ API_UNAVAILABLE(tvos){
     [self.view addSubview:self.rotationAnglePicker];
     [self.view addSubview:self.rotationTimePicker];
     [self.view addSubview:self.pointScroll];
-//  [self.modeSwitchaddTarget:self action:@selector(modeSwitchChange:) forControlEvents:UIControlEventValueChanged];
+    
+//------------------
+    
+    
+
 }
 
 
