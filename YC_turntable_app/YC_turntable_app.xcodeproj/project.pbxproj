@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B51ABB3724234C18002FA7E7 /* DrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = B51ABB3624234C18002FA7E7 /* DrawView.m */; };
+		B51ABB3D24236872002FA7E7 /* CustomSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B51ABB3C24236872002FA7E7 /* CustomSlider.m */; };
 		B51C6949241F7A2A00512467 /* angle.plist in Resources */ = {isa = PBXBuildFile; fileRef = B51C6947241F7A2A00512467 /* angle.plist */; };
 		B51C694A241F7A2A00512467 /* time.plist in Resources */ = {isa = PBXBuildFile; fileRef = B51C6948241F7A2A00512467 /* time.plist */; };
 		B53D733F241F1DBB009235FF /* bg_slider.png in Resources */ = {isa = PBXBuildFile; fileRef = B53D733E241F1DBB009235FF /* bg_slider.png */; };
@@ -67,6 +69,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B51ABB3524234C18002FA7E7 /* DrawView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DrawView.h; sourceTree = "<group>"; };
+		B51ABB3624234C18002FA7E7 /* DrawView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrawView.m; sourceTree = "<group>"; };
+		B51ABB3B24236872002FA7E7 /* CustomSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomSlider.h; sourceTree = "<group>"; };
+		B51ABB3C24236872002FA7E7 /* CustomSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomSlider.m; sourceTree = "<group>"; };
 		B51C6947241F7A2A00512467 /* angle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = angle.plist; sourceTree = "<group>"; };
 		B51C6948241F7A2A00512467 /* time.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = time.plist; sourceTree = "<group>"; };
 		B53D733E241F1DBB009235FF /* bg_slider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_slider.png; sourceTree = "<group>"; };
@@ -164,6 +170,8 @@
 			children = (
 				B59E6325241C6DB30090A7E0 /* AppDelegate.h */,
 				B59E6326241C6DB30090A7E0 /* AppDelegate.m */,
+				B51ABB3B24236872002FA7E7 /* CustomSlider.h */,
+				B51ABB3C24236872002FA7E7 /* CustomSlider.m */,
 				B59E6328241C6DB30090A7E0 /* SceneDelegate.h */,
 				B5DD424B2421AEE40051939B /* UIAlertController+TapGesAlertController.h */,
 				B5DD424C2421AEE40051939B /* UIAlertController+TapGesAlertController.m */,
@@ -171,6 +179,8 @@
 				B59E632B241C6DB30090A7E0 /* ViewController.h */,
 				B59E632C241C6DB30090A7E0 /* ViewController.m */,
 				B59E632E241C6DB40090A7E0 /* Main.storyboard */,
+				B51ABB3524234C18002FA7E7 /* DrawView.h */,
+				B51ABB3624234C18002FA7E7 /* DrawView.m */,
 				B59E6331241C6DB40090A7E0 /* Assets.xcassets */,
 				B59E6333241C6DB40090A7E0 /* LaunchScreen.storyboard */,
 				B59E6336241C6DB40090A7E0 /* Info.plist */,
@@ -429,6 +439,8 @@
 			files = (
 				B59E632D241C6DB30090A7E0 /* ViewController.m in Sources */,
 				B59E6327241C6DB30090A7E0 /* AppDelegate.m in Sources */,
+				B51ABB3724234C18002FA7E7 /* DrawView.m in Sources */,
+				B51ABB3D24236872002FA7E7 /* CustomSlider.m in Sources */,
 				B59E6338241C6DB40090A7E0 /* main.m in Sources */,
 				B59E632A241C6DB30090A7E0 /* SceneDelegate.m in Sources */,
 				B5DD424D2421AEE40051939B /* UIAlertController+TapGesAlertController.m in Sources */,
