@@ -7,18 +7,37 @@
 //
 
 #import "ViewController.h"
+#import "UIAlertController+TapGesAlertController.h"
+#import "CustomSlider.h"
+#import "DrawView.h"
+#import "DrawColorPoint.h"
+
 
 @interface ViewController ()<UIPickerViewDataSource,UIPickerViewDelegate>
+@property (weak, nonatomic) IBOutlet DrawView *drawView;
+@property (weak, nonatomic) IBOutlet DrawColorPoint *drawColorPoint;
+
+#pragma mark 分段速度的角度值与速度的设定
+@property(assign,nonatomic) NSInteger segmentAngleValue;
+@property(assign,nonatomic) NSInteger segmentSpeedValue;
+
+#pragma mark 倒计时的实现
+@property (nonatomic, strong) dispatch_source_t timer;    //GCD定时器
+@property(assign,nonatomic) NSInteger timePickerValue;
+@property(assign,nonatomic) NSInteger anglePickerValue;
 
 #pragma mark 速度点的颜色
 @property (strong,nonatomic) UIColor *pointColor;
 
-#pragma mark 进度条背景
-@property (weak, nonatomic) IBOutlet UIImageView *progressBG;
+//#pragma mark 进度条背景
+//@property (weak, nonatomic)  UIImageView *progressBG;
 
 #pragma mark 弹窗
 
 @property (weak, nonatomic) UIAlertController *alertController;
+@property (strong,nonatomic) NSMutableArray *segmentPointColorArray;
+@property (strong,nonatomic) NSMutableArray *segmentAngleValueArray;
+@property (strong,nonatomic) NSMutableArray *segmentSpeedValueArray;
 @property (strong,nonatomic) NSMutableArray *speedPointLabelArray;
 @property (strong,nonatomic) NSMutableArray *speedPointButtonArray;
 //存放弹窗里的button速度点
@@ -48,20 +67,22 @@
 @property (weak, nonatomic) IBOutlet UIButton *segmentSpeedButton;
 @property (weak, nonatomic) IBOutlet UIButton *clockwiseButton;
 @property (weak, nonatomic) IBOutlet UIButton *counterClockwiseButton;
-@property (weak, nonatomic) IBOutlet UIProgressView *segmentSpeedProgress;
+@property (weak, nonatomic) IBOutlet UIButton *playOrPauseButton;
+@property (weak, nonatomic) IBOutlet UIButton *addSpeedPointButton;
+@property (weak, nonatomic) IBOutlet UIButton *editPointWindowButton;
+
+
+//@property (weak, nonatomic) IBOutlet UIProgressView *segmentSpeedProgress;
 @property (weak, nonatomic) IBOutlet CustomSlider *fixSpeedSlider;
 
-//@property (weak, nonatomic) IBOutlet UISlider *segmentSpeedSlider;
+@property (weak, nonatomic) IBOutlet CustomSlider *segmentSpeedSlider;
 @property (weak, nonatomic) NSString *speedValuel;
 @property (weak, nonatomic) IBOutlet UILabel *speedValueLebel;
 @end
 
 @implementation ViewController
 
-
-
-
-#pragma mark 速度点的字典
+#pragma mark 速度点array
 //一个标签对应一个button,每次点击之后同时创建,根据在不同的界面显示标签或者button
 -(NSArray *)addSpeedPointArray{
     
@@ -86,14 +107,56 @@
     button.titleLabel.textAlignment=NSTextAlignmentCenter;
     button.frame=CGRectMake(self.pointPlace+50, 0, 40, 40);
     button.backgroundColor=pointColor;
-    //为什么这里的颜色和label的颜色不一样
     button.layer.cornerRadius=20.0;
     
+    
+//    [self.speedPointDictionary setObject:
+//    [NSNumber numberWithLong:self.segmentSpeedValue]
+//                                 forKey:[NSNumber numberWithLong:self.segmentAngleValue]];
+    [self.segmentAngleValueArray addObject:[NSNumber numberWithLong:self.segmentAngleValue]];
+    [self.segmentSpeedValueArray addObject:[NSNumber numberWithLong:self.segmentSpeedValue]];
+    [self.segmentPointColorArray addObject:pointColor];
     [self.speedPointButtonArray addObject:button];
     self.pointPlace=self.pointPlace+50;
     self.pointNumber++;
-    NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray];
+    //NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray];
+    NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray,self.segmentAngleValueArray,self.segmentSpeedValueArray,self.segmentPointColorArray];
     return arr;
+}
+
+#pragma mark 主滑动界面增加速度点按钮的实现
+- (IBAction)addSpeedPoint:(UIButton *)btn {
+    UIAlertController *alert  =
+    [UIAlertController alertControllerWithTitle:@"旋转速度"
+                                        message:@"1-100"
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    //2.1 确认按钮
+    UIAlertAction *conform = [UIAlertAction actionWithTitle:@"确认" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+        self.segmentSpeedValue=[alert.textFields.firstObject.text floatValue];
+        self.segmentAngleValue=self.segmentSpeedSlider.value;
+        NSArray *arr =self.addSpeedPointArray;
+        UILabel *label=[arr[0] objectAtIndex:self.pointNumber-2];
+        self.drawView.arr=@[arr[2],arr[3]];
+        self.drawColorPoint.arr=@[arr[2],arr[4]];
+               //self.pointNumber++;
+        self.pointScroll.contentSize=CGSizeMake(self.pointPlace, 0);
+        [self.pointScroll addSubview:label];
+        self.segmentSpeedValue=0;
+    }];
+    //2.2 取消按钮
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    //2.3 还可以添加文本框 通过 alert.textFields.firstObject 获得该文本框
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入速度";
+        textField.keyboardType=UIKeyboardTypePhonePad;
+    }];
+    [alert addAction:conform];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:^{
+        [alert tapGesAlert];
+    }];
 }
 
 #pragma mark 随机颜色懒加载
@@ -119,13 +182,11 @@
 }
 
 #pragma mark 弹窗
-
 - (IBAction)editPointWindow:(UIButton *)btn {
     self.alertController  =
     [UIAlertController alertControllerWithTitle:@"\n"
                                         message:@" \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n"
                                  preferredStyle:UIAlertControllerStyleAlert];
-    
     UIButton *adbtn=[[UIButton alloc]init];
       adbtn.frame = CGRectMake(10,10, 20, 20);
       [adbtn setImage:[UIImage imageNamed:@"s_add"]
@@ -148,14 +209,7 @@
     }];
 }
 
-#pragma mark 主滑动界面增加速度点按钮的实现
-- (IBAction)addSpeedPoint:(UIButton *)btn {
-    NSArray *arr =self.addSpeedPointArray;
-    UILabel *label=[arr[0] objectAtIndex:self.pointNumber-2];
-    //self.pointNumber++;
-    self.pointScroll.contentSize=CGSizeMake(self.pointPlace, 0);
-    [self.pointScroll addSubview:label];
-}
+   
 
 #pragma mark scrollView
 ////弹窗里的滚动界面
@@ -237,13 +291,22 @@ API_UNAVAILABLE(tvos){
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow
                   :(NSInteger)row inComponent
                   :(NSInteger)component API_UNAVAILABLE(tvos){
-    NSString *string =[NSString new];
-  
     if (pickerView.tag == 5){
-        string =self.rotationAngleData[row];
+        NSString *anglePickerValue =self.rotationAngleData[row];
+        anglePickerValue =[anglePickerValue componentsSeparatedByString:@"\u00b0"][0];
+        self.anglePickerValue=[anglePickerValue intValue];
+        NSLog(@"角度为%ld °",self.anglePickerValue);
        }else if(pickerView.tag == 6){
-           string =self.rotationTimeData[row];
+           NSString *timePickerValue =self.rotationTimeData[row];
+           timePickerValue =[timePickerValue componentsSeparatedByString:@"s"][0];
+           self.timePickerValue=[timePickerValue intValue];
+           NSLog(@"时间为%ld s", self.timePickerValue);
        }
+    float speed=self.anglePickerValue/self.timePickerValue;
+    self.fixSpeedSlider.value=speed/7.19*0.01;
+    self.speedValuel=
+    [NSString stringWithFormat:@"%.2f%%",self.fixSpeedSlider.value*100];
+    self.speedValueLebel.text=self.speedValuel;
 }
 // 返回总共有多少列要显示
 - (NSInteger)numberOfComponentsInPickerView
@@ -277,26 +340,39 @@ API_UNAVAILABLE(tvos){
 }
 
 
--(UIImageView *)progressBG{
-    _progressBG.bounds=CGRectMake(0, 0, 300, 300);
-    return _progressBG;
-}
+//-(UIImageView *)progressBG{
+//    _progressBG.bounds=CGRectMake(0, 0, 300, 300);
+//    [_progressBG bringSubviewToFront:self.segmentSpeedProgress];
+//    return _progressBG;
+//}
 
 #pragma mark 进度条
--(UIProgressView *)segmentSpeedProgress{
-    [self.view addSubview:self.progressBG];
-    _segmentSpeedProgress.bounds=CGRectMake(0, 0, 290, 0);
-    _segmentSpeedProgress.progressTintColor=  [UIColor colorWithRed:5/255.0 green: 132/255.0 blue:234/255.0 alpha:1];//设定progressView的显示颜色
-    CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 3.9f);
-    _segmentSpeedProgress.transform = transform;//设定宽高
-    _segmentSpeedProgress.layer.backgroundColor=
-    [UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
-   _segmentSpeedProgress.layer.cornerRadius = 4.5;
-    _segmentSpeedProgress.layer.masksToBounds = YES;
-    return _segmentSpeedProgress;
-}
+//-(UIProgressView *)segmentSpeedProgress{
+//
+//    _segmentSpeedProgress.bounds=CGRectMake(0, 0, 290, 0);
+//    _segmentSpeedProgress.progressTintColor=  [UIColor colorWithRed:5/255.0 green: 132/255.0 blue:234/255.0 alpha:1];//设定progressView的显示颜色
+//    CGAffineTransform transform = CGAffineTransformMakeScale(1.0f, 3.9f);
+//    _segmentSpeedProgress.transform = transform;//设定宽高
+//    _segmentSpeedProgress.layer.backgroundColor=
+//    [UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
+//   _segmentSpeedProgress.layer.cornerRadius = 4.5;
+//    _segmentSpeedProgress.layer.masksToBounds = YES;
+//    _segmentSpeedProgress.progress = 0.0;
+//    return _segmentSpeedProgress;
+//}
 
 #pragma mark 滑块背景颜色与圆角化实现
+-(CustomSlider *)segmentSpeedSlider{
+    _segmentSpeedSlider.minimumValue=0;
+    _segmentSpeedSlider.maximumValue=360;
+    _segmentSpeedSlider.bounds=CGRectMake(0, 0, 300, 20);
+
+    _segmentSpeedSlider.layer.cornerRadius=10.0;
+    _segmentSpeedSlider.layer.backgroundColor=
+    [UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
+    return _segmentSpeedSlider;
+}
+
 -(CustomSlider *)fixSpeedSlider{
     //_fixSpeedSlider=[[CustomSlider alloc]init];
    // [_fixSpeedSlider trackRectForBounds:CGRectMake(0, 0, 0, 0)];
@@ -307,6 +383,19 @@ API_UNAVAILABLE(tvos){
     return _fixSpeedSlider;
 }
 
+#pragma mark 滑条的事件
+
+- (IBAction)segmentSpeedSlider:(UISlider *)sender {
+    //发送角度
+}
+
+- (IBAction)fixSpeedSlider:(CustomSlider *)sender {
+    self.speedValuel=
+     [NSString stringWithFormat:@"%.0f%%",self.fixSpeedSlider.value*100];
+     self.speedValueLebel.text=self.speedValuel;
+}
+
+
 #pragma mark 速度百分比值label的圆角化与速度值的显示实现
 -(UILabel *)speedLebel{
     
@@ -314,19 +403,75 @@ API_UNAVAILABLE(tvos){
     _speedValueLebel.layer.backgroundColor=
     [UIColor colorWithRed:49/255.0 green:49/255.0 blue:49/255.0 alpha:1].CGColor;
     self.speedValuel=
-    [NSString stringWithFormat:@"%.0f%%",self.fixSpeedSlider.value*100];
+    [NSString stringWithFormat:@"%.2f%%",self.fixSpeedSlider.value*100];
     _speedValueLebel.textColor=[UIColor whiteColor];
     _speedValueLebel.text=self.speedValuel;
     return _speedValueLebel;
 }
 
+
 #pragma mark 播放暂停实现
 - (IBAction)playOrPause:(UIButton *)btn {
-    if(btn.selected==YES){
-        btn.selected=NO;
-    }else{
+    if(btn.selected==NO){
         btn.selected=YES;
+        if ( self.fixSpeedSlider.enabled==NO){
+            [self createGCDTimer:self.timePickerValue];  //开启定时功能
+        }
+        
+    }else{
+        btn.selected=NO;
+        if ( self.fixSpeedSlider.enabled==NO){
+            dispatch_source_cancel(self.timer);  //reset定时功能
+        }
+        
+        
     }
+    
+        
+    
+}
+
+#pragma mark 开启定时器
+- (void)createGCDTimer:(NSInteger)countdownTime{
+    if(countdownTime==0){
+        countdownTime=1;
+    }
+        __block NSInteger time = countdownTime; //倒计时时间
+       dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+       self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+       
+       dispatch_source_set_timer( self.timer,DISPATCH_TIME_NOW,1.0*NSEC_PER_SEC, 0); //每秒执行
+       
+       dispatch_source_set_event_handler( self.timer, ^{
+           
+           if(time <= 0){ //倒计时结束，关闭
+               
+               dispatch_source_cancel( self.timer);
+               
+               dispatch_async(dispatch_get_main_queue(), ^{
+                   
+                  self.playOrPauseButton.selected=NO;
+               });
+               
+           }else{
+
+               int seconds = time % 60;
+               dispatch_async(dispatch_get_main_queue(), ^{
+                   NSLog(@"%d",seconds);
+                   
+                   float progressValue=(1.0/countdownTime)*(countdownTime-time);
+                   
+                   //self.segmentSpeedProgress.progress = progressValue;
+                 
+
+               });
+                    
+               time--;
+           }
+       });
+                    
+       dispatch_resume( self.timer);
+
 }
 
 #pragma mark 旋转方向的设置实现
@@ -361,7 +506,9 @@ API_UNAVAILABLE(tvos){
 -(UIButton *)fixedSpeedButton{
      //NSLog(@"速度模式按钮加载中");
     _fixedSpeedButton.selected=YES;
-    //self.segmentSpeedSlider.enabled=NO;
+    self.segmentSpeedSlider.enabled=NO;
+    self.addSpeedPointButton.enabled=NO;
+    self.editPointWindowButton.enabled=NO;
     return _fixedSpeedButton;
 }
 
@@ -374,25 +521,21 @@ API_UNAVAILABLE(tvos){
         UIButton *but=(UIButton*)[self.view viewWithTag:2];
         but.selected=NO;
          self.fixSpeedSlider.enabled=YES;
-         //self.segmentSpeedSlider.enabled=NO;
+         self.segmentSpeedSlider.enabled=NO;
+        self.addSpeedPointButton.enabled=NO;
+        self.editPointWindowButton.enabled=NO;
     }else if (button.tag==2){
         button.selected=YES;
         UIButton *but=(UIButton*)[self.view viewWithTag:1];
         but.selected=NO;
         self.fixSpeedSlider.enabled=NO;
-      //  self.segmentSpeedSlider.enabled=YES;
+        self.segmentSpeedSlider.enabled=YES;
+        self.addSpeedPointButton.enabled=YES;
+        self.editPointWindowButton.enabled=YES;
         
     }
 }
 
-#pragma mark 滑条的实时显示
-
-
-- (IBAction)fixSpeedSlider:(CustomSlider *)sender {
-    self.speedValuel=
-     [NSString stringWithFormat:@"%.0f%%",self.fixSpeedSlider.value*100];
-     self.speedValueLebel.text=self.speedValuel;
-}
 
 
 #pragma mark 模式开关切换实现
@@ -422,18 +565,26 @@ API_UNAVAILABLE(tvos){
     // Do any additional setup after loading the view.
     self.speedPointLabelArray=[NSMutableArray array];
     self.speedPointButtonArray=[NSMutableArray array];
+    self.segmentPointColorArray=[NSMutableArray array];
+    self.segmentAngleValueArray=[NSMutableArray array];
+    self.segmentSpeedValueArray=[NSMutableArray array];
     self.pointNumber=1;
     self.pointPlace=0;
+    self.anglePickerValue=10;
+    self.timePickerValue=1;
+    self.segmentSpeedValue=0;
+    self.segmentSpeedSlider.value=0;
     [self.view addSubview:self.modeSwitch];
     [self.view addSubview:self.fixedSpeedButton];
     [self.view addSubview:self.clockwiseButton];
-   // [self.view addSubview:self.segmentSpeedSlider ];
+    [self.view addSubview:self.segmentSpeedSlider ];
     [self.view addSubview:self.fixSpeedSlider];
     [self.view addSubview:self.speedLebel];
     [self.view addSubview:self.rotationAnglePicker];
     [self.view addSubview:self.rotationTimePicker];
     [self.view addSubview:self.pointScroll];
-    [self.view bringSubviewToFront:self.segmentSpeedProgress];
+   // [self.view addSubview:self.segmentSpeedProgress];
+    
 //------------------
     
     

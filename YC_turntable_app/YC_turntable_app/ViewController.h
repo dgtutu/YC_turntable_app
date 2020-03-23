@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIAlertController+TapGesAlertController.h"
-#import "CustomSlider.h"
-@interface ViewController : UIViewController
 
+@interface ViewController : UIViewController
 
 @end
 
