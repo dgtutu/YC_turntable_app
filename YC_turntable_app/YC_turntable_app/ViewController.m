@@ -45,7 +45,7 @@
 
 #pragma mark Scroll view的属性
 @property (assign,nonatomic) int pointNumber;
-@property (assign,nonatomic) int pointPlace;
+@property (assign,nonatomic) int pointPlaceX;
 @property (weak, nonatomic) IBOutlet UIScrollView *pointScroll;
 @property (strong, nonatomic) UIScrollView *alertControllerPointScroll;
 
@@ -92,7 +92,7 @@
     [NSString stringWithFormat:@"%d",self.pointNumber];
     label.textColor=[UIColor blackColor];
     label.textAlignment=NSTextAlignmentCenter;
-    label.frame=CGRectMake(self.pointPlace, 0, 40, 40);
+    label.frame=CGRectMake(self.pointPlaceX, 0, 40, 40);
     label.layer.cornerRadius=20.0;
     label.layer.backgroundColor= pointColor.CGColor;
     [self.speedPointLabelArray addObject:label];
@@ -105,7 +105,7 @@
      [UIColor blackColor]
                  forState:UIControlStateNormal];
     button.titleLabel.textAlignment=NSTextAlignmentCenter;
-    button.frame=CGRectMake(self.pointPlace+50, 0, 40, 40);
+    button.frame=CGRectMake(40+self.pointNumber%4*50, 10+self.pointNumber/4*45, 40, 40);
     button.backgroundColor=pointColor;
     button.layer.cornerRadius=20.0;
     
@@ -117,7 +117,7 @@
     [self.segmentSpeedValueArray addObject:[NSNumber numberWithLong:self.segmentSpeedValue]];
     [self.segmentPointColorArray addObject:pointColor];
     [self.speedPointButtonArray addObject:button];
-    self.pointPlace=self.pointPlace+50;
+    self.pointPlaceX=self.pointPlaceX+50;
     self.pointNumber++;
     //NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray];
     NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray,self.segmentAngleValueArray,self.segmentSpeedValueArray,self.segmentPointColorArray];
@@ -140,7 +140,7 @@
         self.drawView.arr=@[arr[2],arr[3]];
         self.drawColorPoint.arr=@[arr[2],arr[4]];
                //self.pointNumber++;
-        self.pointScroll.contentSize=CGSizeMake(self.pointPlace, 0);
+        self.pointScroll.contentSize=CGSizeMake(self.pointPlaceX, 0);
         [self.pointScroll addSubview:label];
         self.segmentSpeedValue=0;
     }];
@@ -176,33 +176,40 @@
     NSArray *arr =self.addSpeedPointArray;
     UIButton *speedButton =[arr[1] objectAtIndex:self.pointNumber-2];
     UILabel *label=[arr[0] objectAtIndex:self.pointNumber-2];
-    self.pointScroll.contentSize=CGSizeMake(self.pointPlace, 0);
+    self.pointScroll.contentSize=CGSizeMake(self.pointPlaceX, 0);
     [self.pointScroll addSubview:label];
-    [self.alertController.view addSubview:speedButton];
+    [self.alertControllerPointScroll addSubview:speedButton];
+    self.alertControllerPointScroll.contentSize=
+    CGSizeMake(270 , 10+self.pointNumber/4*45);
 }
 
 #pragma mark 弹窗
 - (IBAction)editPointWindow:(UIButton *)btn {
     self.alertController  =
     [UIAlertController alertControllerWithTitle:@"\n"
-                                        message:@" \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n"
+                                        message:@" \n \n \n \n \n "
                                  preferredStyle:UIAlertControllerStyleAlert];
     UIButton *adbtn=[[UIButton alloc]init];
-      adbtn.frame = CGRectMake(10,10, 20, 20);
+      adbtn.frame = CGRectMake(40,10, 40, 40);
       [adbtn setImage:[UIImage imageNamed:@"s_add"]
                   forState:UIControlStateNormal];
       [adbtn addTarget:self action:@selector(clickAddbtn:)
            forControlEvents:UIControlEventTouchUpInside];
-     // [self.alertController.view addSubview:self.alertControllerPointScroll];
-      [self.alertController.view addSubview:adbtn];
-    //
-    //
+    
+       self.alertControllerPointScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0,0,270,160)];
+       self.alertControllerPointScroll.clipsToBounds=YES;//默认是yes,超出边框的会被裁减
+      [self.alertController.view addSubview:self.alertControllerPointScroll];
+      [self.alertControllerPointScroll addSubview:adbtn];
+    self.alertControllerPointScroll.contentSize=
+    CGSizeMake(270 , 10+self.pointNumber/4*45);
     //-----------------------
+    NSLog(@"gnmm");
     for (UIButton * speedButton in self.speedPointButtonArray) {
-        [self.alertController.view addSubview:speedButton];
-
+        //[self.alertController.view addSubview:speedButton];
+        [self.alertControllerPointScroll addSubview:speedButton];
+        NSLog(@"cnmm");
     }
-    //---------
+//    ---------
     //[self.alertController.view addSubview:self.alertControllerPointScroll];
     [self presentViewController:self.alertController animated:YES completion:^{
         [self.alertController tapGesAlert];
@@ -228,7 +235,7 @@
 //app里的滚动界面
 -(UIScrollView *)pointScroll{
     _pointScroll.contentSize=
-    CGSizeMake(self.pointPlace, 0);//这个滚动的长度需要动态生成
+    CGSizeMake(self.pointPlaceX, 0);//这个滚动的长度需要动态生成
 //    _pointScroll.backgroundColor=[UIColor redColor];
     _pointScroll.clipsToBounds=YES;//默认是yes,超出边框的会被裁减
     return _pointScroll;
@@ -569,7 +576,7 @@ API_UNAVAILABLE(tvos){
     self.segmentAngleValueArray=[NSMutableArray array];
     self.segmentSpeedValueArray=[NSMutableArray array];
     self.pointNumber=1;
-    self.pointPlace=0;
+    self.pointPlaceX=0;
     self.anglePickerValue=10;
     self.timePickerValue=1;
     self.segmentSpeedValue=0;

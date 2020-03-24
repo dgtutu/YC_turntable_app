@@ -31,6 +31,24 @@
 - (void)drawRect:(CGRect)rect {
     [self drawMainLine];
     [self drawFoldLine];
+    [self drawPoint];
+}
+
+-(void)drawPoint{
+    NSMutableArray *naM=self.arr[0];
+    NSMutableArray *nsM=self.arr[1];
+    for (int i=0; i<[nsM count]; i++) {
+    
+           NSNumber *Na=[naM objectAtIndex:i];
+           double da=Na.doubleValue/360*269;
+           NSNumber *Ns=[nsM objectAtIndex:i];
+           double ds=Ns.doubleValue/2*-1+65;
+           
+            UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(da-1, ds-1.5, 3, 3)];
+              [[UIColor colorWithRed:48/255.0 green:49/255.0 blue:50/255.0 alpha:255/255.0] set];
+              [path fill];
+              [path stroke];
+    }
 }
 
 -(void)drawFoldLine{
@@ -63,7 +81,7 @@
         NSLog(@"当前循环为第%d次,nsm大小为%ld,temp的速度为:%f,temp的角度为:%f",i,[nsM count],ds,da);
     }
     [[UIColor colorWithRed:48/255.0 green:49/255.0 blue:50/255.0 alpha:255/255.0] set];
-    [path setLineWidth:2];
+    [path setLineWidth:1];
    
     [path stroke];
 }
@@ -75,7 +93,7 @@
     [path moveToPoint:CGPointMake(0,40)];
     [path addLineToPoint:CGPointMake(269,40)];
     [[UIColor colorWithRed:48/255.0 green:49/255.0 blue:50/255.0 alpha:255/255.0] set];
-    [path setLineWidth:2];
+    [path setLineWidth:0.7];
     [path stroke];
     
 
