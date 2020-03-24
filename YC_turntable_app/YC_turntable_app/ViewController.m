@@ -124,6 +124,46 @@
     return arr;
 }
 
+-(NSArray *)cutSpeedPointArray{
+    
+    UIColor *pointColor=self.pointColor;
+    UILabel *label=[UILabel new];
+    label.text=
+    [NSString stringWithFormat:@"%d",self.pointNumber];
+    label.textColor=[UIColor blackColor];
+    label.textAlignment=NSTextAlignmentCenter;
+    label.frame=CGRectMake(self.pointPlaceX, 0, 40, 40);
+    label.layer.cornerRadius=20.0;
+    label.layer.backgroundColor= pointColor.CGColor;
+    [self.speedPointLabelArray addObject:label];
+
+    UIButton *button=[[UIButton alloc]init];
+    [button setTitle:
+     [NSString stringWithFormat:@"%d",self.pointNumber]
+            forState:UIControlStateNormal];
+    [button setTitleColor:
+     [UIColor blackColor]
+                 forState:UIControlStateNormal];
+    button.titleLabel.textAlignment=NSTextAlignmentCenter;
+    button.frame=CGRectMake(40+self.pointNumber%4*50, 10+self.pointNumber/4*45, 40, 40);
+    button.backgroundColor=pointColor;
+    button.layer.cornerRadius=20.0;
+    
+    
+//    [self.speedPointDictionary setObject:
+//    [NSNumber numberWithLong:self.segmentSpeedValue]
+//                                 forKey:[NSNumber numberWithLong:self.segmentAngleValue]];
+    [self.segmentAngleValueArray addObject:[NSNumber numberWithLong:self.segmentAngleValue]];
+    [self.segmentSpeedValueArray addObject:[NSNumber numberWithLong:self.segmentSpeedValue]];
+    [self.segmentPointColorArray addObject:pointColor];
+    [self.speedPointButtonArray addObject:button];
+    self.pointPlaceX=self.pointPlaceX+50;
+    self.pointNumber++;
+    //NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray];
+    NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray,self.segmentAngleValueArray,self.segmentSpeedValueArray,self.segmentPointColorArray];
+    return arr;
+}
+
 #pragma mark 主滑动界面增加速度点按钮的实现
 - (IBAction)addSpeedPoint:(UIButton *)btn {
     UIAlertController *alert  =
@@ -191,7 +231,7 @@
                                  preferredStyle:UIAlertControllerStyleAlert];
     UIButton *adbtn=[[UIButton alloc]init];
       adbtn.frame = CGRectMake(40,10, 40, 40);
-      [adbtn setImage:[UIImage imageNamed:@"s_add"]
+      [adbtn setImage:[UIImage imageNamed:@"s_cut"]
                   forState:UIControlStateNormal];
       [adbtn addTarget:self action:@selector(clickAddbtn:)
            forControlEvents:UIControlEventTouchUpInside];
