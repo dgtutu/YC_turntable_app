@@ -12,9 +12,10 @@
 
 
 -(void) setArr:(NSArray *)arr{
+  
+        _arr=arr;
+        [self setNeedsDisplay];
     
-    _arr=arr;
-    [self setNeedsDisplay];
 }
 //-(void)setSAngelValue:(CGFloat)SAngelValue{
 //    _SAngelValue =SAngelValue;
@@ -34,22 +35,25 @@
 }
 
 -(void)drawColor{
-    
-    NSMutableArray *naM=self.arr[0];
-    NSMutableArray *ncM=self.arr[1];
-    for (int i=0; i<[naM count]; i++) {
-        
-        NSNumber *Na=[naM objectAtIndex:i];
-        double da=Na.doubleValue/360*269;
-        UIColor *color=[ncM objectAtIndex:i];
-        UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(da, 5, 6, 6)];
-        [color set];
-        [path fill];
-        
-       // [path setLineWidth:5];
-        [path stroke];
-    }
-   
+     if([self.arr[0] count]!=0){
+        NSMutableArray *naM=self.arr[0];
+        NSMutableArray *ncM=self.arr[1];
+        for (int i=0; i<[naM count]; i++) {
+            
+            NSNumber *Na=[naM objectAtIndex:i];
+            double da=Na.doubleValue/360*269;
+            UIColor *color=[ncM objectAtIndex:i];
+            UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(da, 5, 6, 6)];
+            [color set];
+            [path fill];
+            
+           // [path setLineWidth:5];
+            [path stroke];
+        }
+     }else{
+          UIBezierPath *path = [UIBezierPath bezierPath];
+            [path stroke];
+     }
     
 }
 

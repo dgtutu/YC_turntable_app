@@ -12,7 +12,7 @@
 
 @implementation UIAlertController (TapGesAlertController)
 - (void)tapGesAlert{
-    NSLog(@"点击空白处");
+    //NSLog(@"点击空白处");
     NSArray * arrayViews = [UIApplication sharedApplication].windows[0].subviews;
     //NSLog(@"%@",arrayViews);
     //NSArray * arrayViews = [UIApplication sharedApplication].keyWindow.subviews;

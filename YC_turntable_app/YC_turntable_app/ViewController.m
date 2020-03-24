@@ -38,13 +38,13 @@
 @property (strong,nonatomic) NSMutableArray *segmentPointColorArray;
 @property (strong,nonatomic) NSMutableArray *segmentAngleValueArray;
 @property (strong,nonatomic) NSMutableArray *segmentSpeedValueArray;
-@property (strong,nonatomic) NSMutableArray *speedPointLabelArray;
+@property (strong,nonatomic) NSMutableArray *speedPointButtonMArray;
 @property (strong,nonatomic) NSMutableArray *speedPointButtonArray;
 //存放弹窗里的button速度点
 
 
 #pragma mark Scroll view的属性
-@property (assign,nonatomic) int pointNumber;
+//@property (assign,nonatomic) int pointNumber;
 @property (assign,nonatomic) int pointPlaceX;
 @property (weak, nonatomic) IBOutlet UIScrollView *pointScroll;
 @property (strong, nonatomic) UIScrollView *alertControllerPointScroll;
@@ -85,27 +85,35 @@
 #pragma mark 速度点array
 //一个标签对应一个button,每次点击之后同时创建,根据在不同的界面显示标签或者button
 -(NSArray *)addSpeedPointArray{
-    
+    long pointNumber=[self.segmentAngleValueArray count]+1;
     UIColor *pointColor=self.pointColor;
-    UILabel *label=[UILabel new];
-    label.text=
-    [NSString stringWithFormat:@"%d",self.pointNumber];
-    label.textColor=[UIColor blackColor];
-    label.textAlignment=NSTextAlignmentCenter;
-    label.frame=CGRectMake(self.pointPlaceX, 0, 40, 40);
-    label.layer.cornerRadius=20.0;
-    label.layer.backgroundColor= pointColor.CGColor;
-    [self.speedPointLabelArray addObject:label];
-
-    UIButton *button=[[UIButton alloc]init];
-    [button setTitle:
-     [NSString stringWithFormat:@"%d",self.pointNumber]
+    //主界面button
+    UIButton *buttonM=[[UIButton alloc]init];
+    [buttonM setTitle:
+     [NSString stringWithFormat:@"%ld",pointNumber]
             forState:UIControlStateNormal];
-    [button setTitleColor:
+    [buttonM setTitleColor:
      [UIColor blackColor]
                  forState:UIControlStateNormal];
+    buttonM.titleLabel.textAlignment=NSTextAlignmentCenter;
+    buttonM.frame=CGRectMake(self.pointPlaceX, 0, 40, 40);
+    buttonM.backgroundColor=pointColor;
+    buttonM.layer.cornerRadius=20.0;
+     [buttonM setTitleColor:
+        [UIColor whiteColor]
+                    forState:UIControlStateHighlighted];
+    [self.speedPointButtonMArray addObject:buttonM];
+    
+    //弹窗
+    UIButton *button=[[UIButton alloc]init];
+    [button setTitle:
+     [NSString stringWithFormat:@"%ld",pointNumber]
+            forState:UIControlStateNormal];
+    [button setTitleColor:
+     [UIColor whiteColor]
+                 forState:UIControlStateNormal];
     button.titleLabel.textAlignment=NSTextAlignmentCenter;
-    button.frame=CGRectMake(40+self.pointNumber%4*50, 10+self.pointNumber/4*45, 40, 40);
+    button.frame=CGRectMake(40+pointNumber%4*50, 10+pointNumber/4*45, 40, 40);
     button.backgroundColor=pointColor;
     button.layer.cornerRadius=20.0;
     
@@ -116,53 +124,28 @@
     [self.segmentAngleValueArray addObject:[NSNumber numberWithLong:self.segmentAngleValue]];
     [self.segmentSpeedValueArray addObject:[NSNumber numberWithLong:self.segmentSpeedValue]];
     [self.segmentPointColorArray addObject:pointColor];
+    
     [self.speedPointButtonArray addObject:button];
     self.pointPlaceX=self.pointPlaceX+50;
-    self.pointNumber++;
-    //NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray];
-    NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray,self.segmentAngleValueArray,self.segmentSpeedValueArray,self.segmentPointColorArray];
+    
+    //NSArray *arr=@[self.speedPointButtonMArray,self.speedPointButtonArray];
+    NSArray *arr=@[self.speedPointButtonMArray,self.speedPointButtonArray,self.segmentAngleValueArray,self.segmentSpeedValueArray,self.segmentPointColorArray];
     return arr;
 }
 
--(NSArray *)cutSpeedPointArray{
-    
-    UIColor *pointColor=self.pointColor;
-    UILabel *label=[UILabel new];
-    label.text=
-    [NSString stringWithFormat:@"%d",self.pointNumber];
-    label.textColor=[UIColor blackColor];
-    label.textAlignment=NSTextAlignmentCenter;
-    label.frame=CGRectMake(self.pointPlaceX, 0, 40, 40);
-    label.layer.cornerRadius=20.0;
-    label.layer.backgroundColor= pointColor.CGColor;
-    [self.speedPointLabelArray addObject:label];
-
-    UIButton *button=[[UIButton alloc]init];
-    [button setTitle:
-     [NSString stringWithFormat:@"%d",self.pointNumber]
-            forState:UIControlStateNormal];
-    [button setTitleColor:
-     [UIColor blackColor]
-                 forState:UIControlStateNormal];
-    button.titleLabel.textAlignment=NSTextAlignmentCenter;
-    button.frame=CGRectMake(40+self.pointNumber%4*50, 10+self.pointNumber/4*45, 40, 40);
-    button.backgroundColor=pointColor;
-    button.layer.cornerRadius=20.0;
-    
-    
-//    [self.speedPointDictionary setObject:
-//    [NSNumber numberWithLong:self.segmentSpeedValue]
-//                                 forKey:[NSNumber numberWithLong:self.segmentAngleValue]];
-    [self.segmentAngleValueArray addObject:[NSNumber numberWithLong:self.segmentAngleValue]];
-    [self.segmentSpeedValueArray addObject:[NSNumber numberWithLong:self.segmentSpeedValue]];
-    [self.segmentPointColorArray addObject:pointColor];
-    [self.speedPointButtonArray addObject:button];
-    self.pointPlaceX=self.pointPlaceX+50;
-    self.pointNumber++;
-    //NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray];
-    NSArray *arr=@[self.speedPointLabelArray,self.speedPointButtonArray,self.segmentAngleValueArray,self.segmentSpeedValueArray,self.segmentPointColorArray];
+-(NSArray * )cutSpeedPointArray{
+    long PointN=[self.speedPointButtonMArray count]-1;
+    //NSLog(@"total point number: %ld,now is No. %ld",[self.speedPointButtonMArray count],PointN);
+    [self.speedPointButtonMArray removeObjectAtIndex:PointN];
+    [self.segmentAngleValueArray removeObjectAtIndex:PointN];
+    [self.segmentSpeedValueArray removeObjectAtIndex:PointN];
+    [self.segmentPointColorArray removeObjectAtIndex:PointN];
+    [self.speedPointButtonArray removeObjectAtIndex:PointN];
+    self.pointPlaceX=self.pointPlaceX-50;
+    NSArray *arr=@[self.speedPointButtonMArray,self.speedPointButtonArray,self.segmentAngleValueArray,self.segmentSpeedValueArray,self.segmentPointColorArray];
     return arr;
 }
+
 
 #pragma mark 主滑动界面增加速度点按钮的实现
 - (IBAction)addSpeedPoint:(UIButton *)btn {
@@ -176,12 +159,12 @@
         self.segmentSpeedValue=[alert.textFields.firstObject.text floatValue];
         self.segmentAngleValue=self.segmentSpeedSlider.value;
         NSArray *arr =self.addSpeedPointArray;
-        UILabel *label=[arr[0] objectAtIndex:self.pointNumber-2];
+        UIButton *buttonM=[arr[0] objectAtIndex:[self.segmentAngleValueArray count]-1];
         self.drawView.arr=@[arr[2],arr[3]];
         self.drawColorPoint.arr=@[arr[2],arr[4]];
                //self.pointNumber++;
         self.pointScroll.contentSize=CGSizeMake(self.pointPlaceX, 0);
-        [self.pointScroll addSubview:label];
+        [self.pointScroll addSubview:buttonM];
         self.segmentSpeedValue=0;
     }];
     //2.2 取消按钮
@@ -211,16 +194,40 @@
     return _pointColor;
 }
 
-#pragma mark 弹窗界面的增加速度点按钮的实现
-- (void)clickAddbtn:(UIButton *)btn {
-    NSArray *arr =self.addSpeedPointArray;
-    UIButton *speedButton =[arr[1] objectAtIndex:self.pointNumber-2];
-    UILabel *label=[arr[0] objectAtIndex:self.pointNumber-2];
-    self.pointScroll.contentSize=CGSizeMake(self.pointPlaceX, 0);
-    [self.pointScroll addSubview:label];
-    [self.alertControllerPointScroll addSubview:speedButton];
-    self.alertControllerPointScroll.contentSize=
-    CGSizeMake(270 , 10+self.pointNumber/4*45);
+#pragma mark 弹窗界面的减少速度点按钮的实现
+- (void)clickCutbtn:(UIButton *)btn {
+   //处理弹窗界面的
+    NSArray *arr= self.cutSpeedPointArray;
+    for (UIView *subview in self.alertControllerPointScroll.subviews) {
+           [subview removeFromSuperview];
+    }
+    UIButton *cutBtn=[[UIButton alloc]init];
+       cutBtn.frame = CGRectMake(40,10, 40, 40);
+       [cutBtn setImage:[UIImage imageNamed:@"s_cut"]
+                   forState:UIControlStateNormal];
+        [cutBtn addTarget:self action:@selector(clickCutbtn:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
+     if([self.segmentAngleValueArray count]==0){
+         cutBtn.enabled=NO;
+     }else{
+         cutBtn.enabled=YES;
+     }
+         [self.alertControllerPointScroll addSubview:cutBtn];
+    for (UIButton * speedButton in self.speedPointButtonArray) {
+           [self.alertControllerPointScroll addSubview:speedButton];
+       }
+    //处理主界面的
+    for (UIView *subview in self.pointScroll.subviews) {
+           [subview removeFromSuperview];
+    }
+    for (UIButton * speedButton in self.speedPointButtonMArray) {
+        [self.pointScroll addSubview:speedButton];
+    }
+//    NSLog(@"%@,%@,%@",arr[2],arr[3],arr[4]);
+    self.drawView.arr=@[arr[2],arr[3]];
+    self.drawColorPoint.arr=@[arr[2],arr[4]];
+       
 }
 
 #pragma mark 弹窗
@@ -229,25 +236,31 @@
     [UIAlertController alertControllerWithTitle:@"\n"
                                         message:@" \n \n \n \n \n "
                                  preferredStyle:UIAlertControllerStyleAlert];
-    UIButton *adbtn=[[UIButton alloc]init];
-      adbtn.frame = CGRectMake(40,10, 40, 40);
-      [adbtn setImage:[UIImage imageNamed:@"s_cut"]
-                  forState:UIControlStateNormal];
-      [adbtn addTarget:self action:@selector(clickAddbtn:)
-           forControlEvents:UIControlEventTouchUpInside];
     
-       self.alertControllerPointScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0,0,270,160)];
-       self.alertControllerPointScroll.clipsToBounds=YES;//默认是yes,超出边框的会被裁减
-      [self.alertController.view addSubview:self.alertControllerPointScroll];
-      [self.alertControllerPointScroll addSubview:adbtn];
+    UIButton *cutBtn=[[UIButton alloc]init];
+    cutBtn.frame = CGRectMake(40,10, 40, 40);
+    [cutBtn setImage:[UIImage imageNamed:@"s_cut"]
+                  forState:UIControlStateNormal];
+       [cutBtn addTarget:self action:@selector(clickCutbtn:)
+              forControlEvents:UIControlEventTouchUpInside];
+   [cutBtn addTarget:self action:@selector(clickCutbtn:)
+   forControlEvents:UIControlEventTouchUpInside];
+    if([self.segmentAngleValueArray count]==0){
+        cutBtn.enabled=NO;
+    }else{
+
+        cutBtn.enabled=YES;
+    }
+    self.alertControllerPointScroll=[[UIScrollView alloc]initWithFrame:CGRectMake(0,0,270,160)];
+    self.alertControllerPointScroll.clipsToBounds=YES;//默认是yes,超出边框的会被裁减
+    [self.alertController.view addSubview:self.alertControllerPointScroll];
+    [self.alertControllerPointScroll addSubview:cutBtn];
     self.alertControllerPointScroll.contentSize=
-    CGSizeMake(270 , 10+self.pointNumber/4*45);
+    CGSizeMake(270 , 25+[self.segmentAngleValueArray count]/4*45);
     //-----------------------
-    NSLog(@"gnmm");
     for (UIButton * speedButton in self.speedPointButtonArray) {
         //[self.alertController.view addSubview:speedButton];
         [self.alertControllerPointScroll addSubview:speedButton];
-        NSLog(@"cnmm");
     }
 //    ---------
     //[self.alertController.view addSubview:self.alertControllerPointScroll];
@@ -610,12 +623,12 @@ API_UNAVAILABLE(tvos){
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.speedPointLabelArray=[NSMutableArray array];
+    self.speedPointButtonMArray=[NSMutableArray array];
     self.speedPointButtonArray=[NSMutableArray array];
     self.segmentPointColorArray=[NSMutableArray array];
     self.segmentAngleValueArray=[NSMutableArray array];
     self.segmentSpeedValueArray=[NSMutableArray array];
-    self.pointNumber=1;
+  
     self.pointPlaceX=0;
     self.anglePickerValue=10;
     self.timePickerValue=1;
