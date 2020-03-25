@@ -130,6 +130,24 @@
     
     //NSArray *arr=@[self.speedPointButtonMArray,self.speedPointButtonArray];
     NSArray *arr=@[self.speedPointButtonMArray,self.speedPointButtonArray,self.segmentAngleValueArray,self.segmentSpeedValueArray,self.segmentPointColorArray];
+   NSLog(@"create arr OK");
+
+//    NSArray *documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,  NSUserDomainMask,YES);
+//    NSString *ourDocumentPath =[documentPaths objectAtIndex:0];
+//    NSLog(@"%@",ourDocumentPath);
+//    NSString *FileName=[ourDocumentPath stringByAppendingPathComponent:@"arr.plist"];//fileName就是保存文件的文件名
+    NSString *sandboxPath = NSHomeDirectory();
+    NSString *documentPath = [sandboxPath
+                              stringByAppendingPathComponent:@"Documents/"];//将Documents添加到sandbox路径上，具体原因前面分析了！
+    NSString *FileName=[documentPath stringByAppendingPathComponent:@"arr.plist"];
+    NSLog(@"%@",documentPath);
+    BOOL flag=[arr writeToFile:FileName atomically:true];
+    if(flag){
+        NSLog(@"输出文件成功");
+    }
+    NSArray *data=[NSArray arrayWithContentsOfFile:FileName];//从FileName中读取出数据
+    NSLog(@"%@",data);
+
     return arr;
 }
 
